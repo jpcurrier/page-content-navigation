@@ -34,6 +34,6 @@ $( '.navigable' ).contentNavigation({
 Setting | Type | Default | Description
 --- | --- | --- | ---
 includeTopNav | boolean | false | Include an extra navigation button to scroll users to the top of the page.
-offsetIndicator | integer or string | 0 | A number of pixels (integer value) or percentage of the window height (string value) above (negative value) or below (positive value) the actual top of a navigation element when the navigation button switches to its "on state."
+offsetIndicator | integer or string | 0 | A number of pixels (integer value) or percentage of the window height (string value) above (negative value) or below (positive value)* the actual top of a navigation element when the navigation button switches to its "on state."
 
-Note: using a positive offset will result in strange behavior where clicking a navigation button scrolls the user to the top of an element but does not switch the button to its "on state," due to this offset. Typically, this is not desirable.
+\*Note: using a positive offsetIndicator value will result in strange behavior where clicking a navigation button scrolls the user to the top of an element but does not switch the button to its "on state," due to this offset. Typically, this is not desirable.
