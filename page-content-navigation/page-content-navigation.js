@@ -23,12 +23,11 @@
     // interaction
     $( document ).on( 'click', '.content-navigation > li', function(){
       var i = $( this ).index();
+      var jumpTo = Math.ceil( $( contents[ i ] ).offset().top );
       if( settings.includeTopNav && $( this ).index() === 0 )
-        var jumpTo = 0;
+        jumpTo = 0;
       else if( settings.includeTopNav )
-        var jumpTo = Math.ceil( $( contents[ i - 1 ] ).offset().top );
-      else
-        var jumpTo = Math.ceil( $( contents[ i ] ).offset().top );
+        jumpTo = Math.ceil( $( contents[ i - 1 ] ).offset().top );
 
       $( 'html, body' ).animate(
         { scrollTop: jumpTo },
@@ -41,31 +40,28 @@
       var scroll = $( window ).scrollTop(),
         atBottom = true;
 
+      var offsetIndicator = Number( settings.offsetIndicator );
       if( typeof settings.offsetIndicator === 'string' && settings.offsetIndicator.indexOf( '%' ) > -1 ){
-        var offsetIndicator = settings.offsetIndicator.replace( /%/g, '' ).trim(), // remove %
-          posDecimal =
-            settings.offsetIndicator.indexOf( '.' ) > -1 ?
-              settings.offsetIndicator.indexOf( '.' ) - 2 :
-                offsetIndicator.length - 2;
+        offsetIndicator = settings.offsetIndicator.replace( /%/g, '' ).trim(); // remove %
+        var posDecimal =
+          settings.offsetIndicator.indexOf( '.' ) > -1 ?
+            settings.offsetIndicator.indexOf( '.' ) - 2 :
+              offsetIndicator.length - 2;
         offsetIndicator = offsetIndicator.replace( /\./g, '' ); // remove .
         if( posDecimal > -1 )
           offsetIndicator = Number( offsetIndicator.slice( 0, posDecimal ) + '.' + offsetIndicator.slice( posDecimal ) );
         else{
+          var natural = offsetIndicator,
+            sign = '';
           if( offsetIndicator.slice( 0, 1 ) == '-' ){
-            var natural = offsetIndicator.slice( 1 ),
-              sign = '-';
+            natural = offsetIndicator.slice( 1 );
+            sign = '-';
             posDecimal -= 1;
-          }
-          else{
-            var natural = offsetIndicator,
-              sign = '';
           }
           offsetIndicator = Number( sign + '0.' + String( Math.pow( 10, ( 0 - posDecimal ) ) ).slice( 1 ) + natural );
         }
         offsetIndicator *= $( window ).height();
       }
-      else
-        var offsetIndicator = Number( settings.offsetIndicator );
 
       contents.each( function( i ){
         if( scroll < $( this ).offset().top + offsetIndicator ){
